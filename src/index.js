@@ -13,9 +13,12 @@ class Child extends React.Component {
 class Counter extends React.Component {
 	constructor() {
 		super(),
-		this.state = {value: 0}
+		this.state = {value: 0} //ES6 getInitialState
 		// this.inc = this.inc.bind(this)
 	}
+	// static defaultProps() {} //ES7 defaultProps
+	// getInitialState() {} //ES5
+	// componentWillMount() // Get initial config from external API in root component
 	inc() {
 		this.setState({
 			value: this.state.value + 1
@@ -26,6 +29,7 @@ class Counter extends React.Component {
 			value: this.state.value - 1
 		})
 	}
+
 	render() {
 		return (
 			<div>
@@ -36,7 +40,15 @@ class Counter extends React.Component {
 			</div>
 		)
 	}
+	// componentDidMount() // Everything what could be done to mounted component and loading data to component
+	// componentWillReciveProps() // Read new props and decide what to do them (eg. update old props on several conditions)
+	// shouldComponentUpdate() // Allow or block component re-render after reciving new props. Used for improving performance
+	// componentWillUpdate // Same as componentWillMount
+	// componentDidUpdate // Same as componentDidMount but due to prop changes
+	// componentWillUnmount() // Remove eventListeners or network requests. Cleaning up componentDidMount after unmounting whole component
 }
+
+// Counter.defaultProps() = {}; // React 15.5^ defaultProps
 
 class Parent extends React.Component {
 	render() {
