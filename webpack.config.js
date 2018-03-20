@@ -4,7 +4,7 @@ const HtmlWebPackPlugin = require('html-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
-	// entry: './src/app.js',
+	entry: './src/components/controls.js',
 	// output: {
 	// 	path: path.resolve(__dirname, 'dist'),
 	// 	filename: 'bundle.js',
