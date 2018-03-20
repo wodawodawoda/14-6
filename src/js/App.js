@@ -9,7 +9,29 @@ let styles = {
 	margin: '0 auto',
 	textAlign: 'center',
 	width: '90%'
+};
+
+
+function httpGet(url) {
+	return new Promise(
+		function (resolve, reject) {
+			const xhr = new XMLHttpRequest();
+			xhr.onload = function() {
+				if(this.status === 200) {
+					resolve(this.response);
+				} else {
+					reject(new Error(this.statusText));
+				}
+			};
+			xhr.onerror = function() {
+				reject(new Error(`XMLHttpRequest Error: ${this.statusText}`));
+			};
+			xhr.open('GET', url);
+			xhr.send();
+		}
+	);
 }
+
 class App extends React.Component {
 	constructor(props) {
 		super(props),
@@ -17,30 +39,27 @@ class App extends React.Component {
 			loading: false,
 			searchingText: '',
 			gif: {}
-		}
+		};
 	}
 	getGif(searchingText, callback) {  // 1.
-		const GIPHY_PUB_KEY = 'JaMQgi5Qf2hTDeUgAVizAI6OMNcTL6y0';
-		const GIPHY_API_URL = 'https://api.giphy.com';
-	    var url = GIPHY_API_URL + '/v1/gifs/random?api_key=' + GIPHY_PUB_KEY + '&tag=' + searchingText;  // 2.
-	    var xhr = new XMLHttpRequest();  // 3.
-	    xhr.open('GET', url);
-	    xhr.onload = function() {
-	        if (xhr.status === 200) {
-	           var data = JSON.parse(xhr.responseText).data; // 4.
-	            var gif = {  // 5.
-	                url: data.fixed_width_downsampled_url,
-	                sourceUrl: data.url
-	            };
-	            callback(gif);  // 6.
-	        }
-	    };
-	    xhr.send();
+	    const url = 'https://api.giphy.com/v1/gifs/random?api_key=JaMQgi5Qf2hTDeUgAVizAI6OMNcTL6y0&tag=' + searchingText;  // 2.
+	    httpGet(url)
+	    .then(response => {
+			const data = JSON.parse(response).data; // 4.
+			const gif = {  // 5.
+				url: data.fixed_width_downsampled_url,
+				sourceUrl: data.url
+			};
+			callback(gif);
+	    })
+	    .catch(error => console.error('Sth wrong:', error));
+
+
 	}
 
 	handleSearch(searchingText) {
 		// const self = this  // Removed thanks to arrow function
-		this.setState({loading: true})
+		this.setState({loading: true});
 		this.getGif(searchingText, gif => {
 			this.setState({
 				loading: false,
@@ -71,4 +90,4 @@ App.defaultProps = {
 	styles: styles
 }
 
-ReactDOM.render(<App/>, document.getElementById('app'))
+ReactDOM.render(<App/>, document.getElementById('app'));
