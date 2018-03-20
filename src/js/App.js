@@ -39,10 +39,10 @@ class App extends React.Component {
 	}
 
 	handleSearch(searchingText) {
-		const self = this
+		// const self = this  // Removed thanks to arrow function
 		this.setState({loading: true})
-		this.getGif(searchingText, function(gif) {
-			self.setState({
+		this.getGif(searchingText, gif => {
+			this.setState({
 				loading: false,
 				gif: gif,
 				searchingText: searchingText
