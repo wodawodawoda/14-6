@@ -1,4 +1,9 @@
-function pad0(value) {
+import React from 'react';
+import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
+import Records from './Records'
+
+export function pad0(value) {
 	let result = value.toString();
 	if (result.length < 2) {
 		result = '0' + result;
@@ -6,61 +11,60 @@ function pad0(value) {
 	return result;
 }
 
-class Stopwatch {
-    constructor(display) {
-        this.running = false;
-        this.display = display;
-        this.reset();
-        this.print(this.times);
-    }
-    reset() {
-    	this.times = {
-    		minutes: 0,
-    		seconds: 0,
-    		miliseconds: 0
-    	}
-    	this.print()
-    }
-    print() {
-    	this.display.innerText = this.format(this.times)
-    }
-    format(times) {
-    	return `${pad0(times.minutes)}:${pad0(times.seconds)}:${pad0(Math.floor(times.miliseconds))}`;
-    }
-    start() {
-    	if(!this.running) {
-    		this.running = true;
-    		this.watch = setInterval(() => this.step(), 10)
-    	}
+export let records = [];
+
+class Stopwatch extends React.Component{
+    constructor(props) {
+        super(props)
+        this.state = {running: false, minutes: 0, seconds: 0, miliseconds: 0}
+
+        this.handleStart = this.handleStart.bind(this);
+        this.handleRecord = this.handleRecord.bind(this);
     }
     step() {
-    	if(!this.running) return;
+    	if(!this.state.running) return;
     	this.calculate();
-    	this.print();
+    }
+    // handleStart = () => { //Check babel version
+    handleStart() {
+		this.setState(prevState => ({
+			running: !prevState.running
+		}));
+    	if(!this.state.running) {
+			setInterval(() => this.step(), 10);
+		}
+    }
+    handleRecord() {
+    	records.unshift({
+    		minutes: this.state.minutes,
+    		seconds: this.state.seconds,
+    		miliseconds: this.state.miliseconds
+    	});
+    	this.setState(this.state);
     }
     calculate() {
-    	this.times.miliseconds += 1;
-    	if (this.times.miliseconds >=100) {
-    		this.times.seconds += 1;
-    		this.times.miliseconds = 0;
+    	this.setState({miliseconds: this.state.miliseconds + 1});
+    	if (this.state.miliseconds >=100) {
+    		this.setState({seconds: this.state.seconds + 1});
+    		this.setState({miliseconds: 0});
     	}
-    	if (this.times.seconds >= 60) {
-    		this.times.minutes += 1;
-    		this.times.seconds = 0;
+    	if (this.state.seconds >= 60) {
+    		this.setState({minutes: this.state.minutes + 1});
+    		this.setState({seconds: 0});
     	}
     }
-    stop() {
-    	this.running = false;
-    	clearInterval(this.watch);
+    render() {
+        return (
+            <div className="stoper container">
+                <button className="btn" id="start" onClick={this.handleStart}>Start / Stop</button>
+                <button className="btn" id="record" onClick={this.handleRecord}>record</button>
+                <button className="btn" id="reset">Reset</button>
+                <p>{pad0(this.state.minutes)}:{pad0(this.state.seconds)}:{pad0(Math.floor(this.state.miliseconds))}</p>
+                <Records />
+            </div>
+        )
     }
-    
 }
 
-const stopwatch = new Stopwatch(document.querySelector('.stopwatch'));
 
-let startButton = document.getElementById('start');
-startButton.addEventListener('click', () => stopwatch.start());
-let stopButton = document.getElementById('stop');
-stopButton.addEventListener('click', () => stopwatch.stop());
-let resetButton = document.getElementById('reset');
-resetButton.addEventListener('click', () => stopwatch.reset());
+ReactDOM.render(<Stopwatch/>, document.getElementById('app'))
