@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 
-import {Counter} from './Counter'
+import {Counter} from './Counter';
 
 
 class Parent extends React.Component {
@@ -16,4 +16,4 @@ class Parent extends React.Component {
 	}
 }
 
-ReactDOM.render(<Parent/>, document.getElementById('app'))
+ReactDOM.render(<Parent/>, document.getElementById('app'));
