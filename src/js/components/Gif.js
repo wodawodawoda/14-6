@@ -5,13 +5,12 @@ import PropTypes from 'prop-types';
 let styles = {
 	minHeight: '310px',
 	margin: '0.5em'
-}
+};
 const GIPHY_LOADING_URL = 'http://www.ifmo.ru/images/loader.gif';
 
 export class Gif extends React.Component {
 	getUrl() {
-		
-		return this.props.sourceUrl || GIPHY_LOADING_URL
+		return this.props.sourceUrl || GIPHY_LOADING_URL;
 	}
 	render() {
 		const url = this.props.loading ? GIPHY_LOADING_URL : this.props.url;
