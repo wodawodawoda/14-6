@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
-import {records, pad0} from './controls'
+import {records, pad0} from './controls';
 
 export default class Records extends React.Component {
 	render() {
