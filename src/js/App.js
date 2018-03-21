@@ -24,7 +24,7 @@ function httpGet(url) {
 				}
 			};
 			xhr.onerror = function() {
-				reject(new Error(`XMLHttpRequest Error: ${this.statusText}`));
+				reject(new Error(new `XMLHttpRequest Error: ${this.statusText}`));
 			};
 			xhr.open('GET', url);
 			xhr.send();
@@ -53,8 +53,6 @@ class App extends React.Component {
 			callback(gif);
 	    })
 	    .catch(error => console.error('Sth wrong:', error));
-
-
 	}
 
 	handleSearch(searchingText) {
@@ -90,4 +88,4 @@ App.defaultProps = {
 	styles: styles
 }
 
-ReactDOM.render(<App/>, document.getElementById('app'));
+ReactDOM.render(<App/>, document.getElementById('app'))

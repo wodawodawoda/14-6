@@ -15,7 +15,6 @@ export class Search extends React.Component {
 	}
 
 	handleChange(event) {
-		
 		const searchingText = event.target.value;
 		this.setState({searchingText: searchingText});
 		if (searchingText.length > 2) {this.props.onSearch(searchingText);}
