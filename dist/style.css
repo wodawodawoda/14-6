@@ -1,0 +1,17 @@
+.container {
+  margin: 0 auto;
+  text-align: center;
+  width: 90%; }
+
+.app__input {
+  font-sze: 1.5em;
+  width: 90%;
+  max-width: 350px; }
+
+.app__gif {
+  min-height: 310px;
+  margin: 0.5em; }
+
+.app__img {
+  width: 100%;
+  max-width: 350px; }

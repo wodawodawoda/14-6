@@ -1,15 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import PropTypes from 'prop-types';
 
 import {Gif} from './components/Gif';
 import {Search} from './components/Search';
+import '../sass/app.sass';
 
-let styles = {
-	margin: '0 auto',
-	textAlign: 'center',
-	width: '90%'
-};
 class App extends React.Component {
 	constructor(props) {
 		super(props);
@@ -52,7 +47,7 @@ class App extends React.Component {
 
 	render() {
 		return (
-			<div className="app container" style={this.props.styles}>
+			<div className="app container">
 				<h1 className="app__header">Wyszukiwarka GIFów!</h1>
 				<p className="app__text">Znajdź gifa na <a href={this.state.gif.sourceUrl}>giphy</a>. Naciskaj enter aby pobrać kolejne gify.</p>
 				<Search
@@ -66,9 +61,6 @@ class App extends React.Component {
 			</div>
 		)
 	}
-}
-App.defaultProps = {
-	styles: styles
 }
 
 ReactDOM.render(<App/>, document.getElementById('app'))

@@ -1,12 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-
-let styles = {
-	fontSize: '1.5em',
-	width: '90%',
-	maxWidth: '350px'
-};
 
 export class Search extends React.Component {
 	constructor(props) {
@@ -32,12 +25,11 @@ export class Search extends React.Component {
 				onKeyUp={this.handleKeyUp.bind(this)}
 				className="app__input"
 				placeholder="Tutaj wpisz wyszukiwaną frazę"
-				style={this.props.styles}
 				value={this.state.searchTerm}
 			/>
 		)
 	}
 }
-Search.defaultProps = {
-	styles: styles
+Search.propTypes = {
+	onSearch: PropTypes.func
 }
